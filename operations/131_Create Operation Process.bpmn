@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.51.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
-  <bpmn:process id="process-create-operation" name="Create Operation Process" isExecutable="true">
-    <bpmn:task id="Activity_105sdtf" name="Create Operation Folder">
+  <bpmn:process id="process-create-operation" name="Proceso de Creación de Operación" isExecutable="true">
+    <bpmn:task id="Activity_105sdtf" name="Crear Carpeta de Operación">
       <bpmn:incoming>Flow_1wfqivh</bpmn:incoming>
       <bpmn:outgoing>Flow_1s5m9rv</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:scriptTask id="Activity_1o54bk4" name="Create Operation Id">
+    <bpmn:scriptTask id="Activity_1o54bk4" name="Crear Identificador de Operación">
       <bpmn:extensionElements>
         <zeebe:script expression="=uuid()" resultVariable="operationId" />
         <zeebe:ioMapping>
@@ -15,7 +15,7 @@
       <bpmn:incoming>Flow_0tiljw9</bpmn:incoming>
       <bpmn:outgoing>Flow_1wfqivh</bpmn:outgoing>
     </bpmn:scriptTask>
-    <bpmn:endEvent id="Event_0is4nvt" name="End">
+    <bpmn:endEvent id="Event_0is4nvt" name="Fin">
       <bpmn:incoming>Flow_1mfkpkz</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0tiljw9" sourceRef="StartEvent_1" targetRef="Activity_1o54bk4" />
@@ -23,14 +23,14 @@
     <bpmn:sequenceFlow id="Flow_1mfkpkz" sourceRef="Activity_0lr752m" targetRef="Event_0is4nvt" />
     <bpmn:sequenceFlow id="Flow_1s5m9rv" sourceRef="Activity_105sdtf" targetRef="add-operation-to-request-node" />
     <bpmn:sequenceFlow id="Flow_1wfqivh" sourceRef="Activity_1o54bk4" targetRef="Activity_105sdtf" />
-    <bpmn:startEvent id="StartEvent_1" name="Start">
+    <bpmn:startEvent id="StartEvent_1" name="Inicio">
       <bpmn:outgoing>Flow_0tiljw9</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="add-operation-to-request-node" name="Add Operation to Request">
+    <bpmn:task id="add-operation-to-request-node" name="Añadir Operación a la Solicitud">
       <bpmn:incoming>Flow_1s5m9rv</bpmn:incoming>
       <bpmn:outgoing>Flow_0z0l6ya</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:task id="Activity_0lr752m" name="Notify Client">
+    <bpmn:task id="Activity_0lr752m" name="Notificar al Cliente">
       <bpmn:incoming>Flow_0z0l6ya</bpmn:incoming>
       <bpmn:outgoing>Flow_1mfkpkz</bpmn:outgoing>
     </bpmn:task>

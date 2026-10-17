@@ -4,8 +4,7 @@
   <bpmn:escalation id="Escalation_1jnkje1" name="Escalation_timeout" escalationCode="Escalation_timeout" />
   <bpmn:escalation id="Escalation_32ac9up" name="Escalation_Classification_Timeout" escalationCode="Escalation_Classification_Timeout" />
   <bpmn:error id="Error_1xlf09e" name="Error_Management_Request" errorCode="Error_Management_Request" />
-  <bpmn:correlationProperty id="_27EB34B8-C4CF-4DA5-8115-E1F27C101C67" name="New Property" />
-  <bpmn:process id="process-manage-request" name="Manage Request" processType="Public" isExecutable="true">
+  <bpmn:process id="process-manage-request" name="Gestionar Solicitud" processType="Public" isExecutable="true">
     <bpmn:documentation id="documentation_X0Hfig"></bpmn:documentation>
     <bpmn:extensionElements>
       <zeebe:versionTag value="1" />
@@ -14,7 +13,7 @@
       </zeebe:properties>
       <open-bpmn:auto-align />
     </bpmn:extensionElements>
-    <bpmn:startEvent id="StartEvent_1" name="start">
+    <bpmn:startEvent id="StartEvent_1" name="Inicio">
       <bpmn:documentation id="documentation_JPW2SQ"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:formDefinition formKey="camunda-forms:bpmn:UserTaskForm_26d7u3u" />
@@ -24,7 +23,7 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_0c05007</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:endEvent id="Event_13g7r32" name="end">
+    <bpmn:endEvent id="Event_13g7r32" name="Fin">
       <bpmn:documentation id="documentation_z27OYw"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -33,12 +32,12 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_16bdrw6</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="Event_1x8h1vv" name="error">
+    <bpmn:endEvent id="Event_1x8h1vv" name="Error">
       <bpmn:documentation id="documentation_W3ayJQ"></bpmn:documentation>
       <bpmn:incoming>Flow_1i4xa9r</bpmn:incoming>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_00s6wzo" errorRef="Error_1xlf09e" />
     </bpmn:endEvent>
-    <bpmn:endEvent id="Event_1na01sd" name="timeout">
+    <bpmn:endEvent id="Event_1na01sd" name="Tiempo agotado">
       <bpmn:documentation id="documentation_xgDTfA"></bpmn:documentation>
       <bpmn:incoming>Flow_1gqmt1j</bpmn:incoming>
       <bpmn:escalationEventDefinition id="EscalationEventDefinition_1ej5s39" escalationRef="Escalation_1jnkje1" />
@@ -49,7 +48,7 @@
       <bpmn:incoming>Flow_0upwvom</bpmn:incoming>
       <bpmn:outgoing>Flow_17btro9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="Gateway_1p56xtf" name="Is Structured?" gatewayDirection="Diverging">
+    <bpmn:exclusiveGateway id="Gateway_1p56xtf" name="¿Está estructurado?" gatewayDirection="Diverging">
       <bpmn:documentation id="documentation_aKM1ow"></bpmn:documentation>
       <bpmn:incoming>Flow_05z1n6g</bpmn:incoming>
       <bpmn:outgoing>Flow_11xqv35</bpmn:outgoing>
@@ -72,7 +71,7 @@
       <bpmn:incoming>Flow_0ec6l6u</bpmn:incoming>
       <bpmn:outgoing>Flow_12fb405</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Activity_0cj8q2j" name="Error Handle Process">
+    <bpmn:userTask id="Activity_0cj8q2j" name="Gestión de Errores">
       <bpmn:documentation id="documentation_FLpEPA"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:userTask />
@@ -81,7 +80,7 @@
       <bpmn:incoming>Flow_12fb405</bpmn:incoming>
       <bpmn:outgoing>Flow_1i4xa9r</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:callActivity id="activity-classify-request" name="Classification Process">
+    <bpmn:callActivity id="activity-classify-request" name="Proceso de Clasificación">
       <bpmn:documentation id="documentation_EzAl8w"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -93,7 +92,7 @@
       <bpmn:incoming>Flow_11xqv35</bpmn:incoming>
       <bpmn:outgoing>Flow_0a1efym</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="activity-create-request" name="Create Request Process">
+    <bpmn:callActivity id="activity-create-request" name="Proceso de Creación de Solicitud">
       <bpmn:documentation id="documentation_Raxbuw"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -104,7 +103,7 @@
       <bpmn:incoming>Flow_0c05007</bpmn:incoming>
       <bpmn:outgoing>Flow_05z1n6g</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="activity-finish-request" name="Finish Request Process">
+    <bpmn:callActivity id="activity-finish-request" name="Proceso de Finalización de Solicitud">
       <bpmn:documentation id="documentation_fZbOKg"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:calledElement processId="process-finish-request" propagateAllChildVariables="false" propagateAllParentVariables="false" />
@@ -116,7 +115,7 @@
       <bpmn:incoming>Flow_12vzrxk</bpmn:incoming>
       <bpmn:outgoing>Flow_16bdrw6</bpmn:outgoing>
     </bpmn:callActivity>
-    <bpmn:callActivity id="activity-manage-operations" name="Manage Operations">
+    <bpmn:callActivity id="activity-manage-operations" name="Gestionar Operaciones">
       <bpmn:documentation id="documentation_c1osKw"></bpmn:documentation>
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -134,17 +133,17 @@
         </bpmn:extensionElements>
       </bpmn:multiInstanceLoopCharacteristics>
     </bpmn:callActivity>
-    <bpmn:boundaryEvent id="Event_1b2x9p2" name="error" attachedToRef="activity-classify-request">
+    <bpmn:boundaryEvent id="Event_1b2x9p2" name="Error" attachedToRef="activity-classify-request">
       <bpmn:documentation id="documentation_xTlWGQ"></bpmn:documentation>
       <bpmn:outgoing>Flow_064n9qd</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_1hc4kjj" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_0cmj4b2" name="error" attachedToRef="activity-finish-request">
+    <bpmn:boundaryEvent id="Event_0cmj4b2" name="Error" attachedToRef="activity-finish-request">
       <bpmn:documentation id="documentation_dTRG3Q"></bpmn:documentation>
       <bpmn:outgoing>Flow_0ec6l6u</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_17wdiuj" />
     </bpmn:boundaryEvent>
-    <bpmn:boundaryEvent id="Event_0qac2bw" name="error" attachedToRef="activity-manage-operations">
+    <bpmn:boundaryEvent id="Event_0qac2bw" name="Error" attachedToRef="activity-manage-operations">
       <bpmn:documentation id="documentation_jMgoIw"></bpmn:documentation>
       <bpmn:outgoing>Flow_17ahc69</bpmn:outgoing>
       <bpmn:errorEventDefinition id="ErrorEventDefinition_06ip48q" />

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.51.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
-  <bpmn:process id="process-classify-request" name="Clasify Request" processType="Public" isExecutable="true">
+  <bpmn:process id="process-classify-request" name="Clasificar Solicitud" processType="Public" isExecutable="true">
     <bpmn:documentation id="documentation_DgA7LA" />
     <bpmn:extensionElements>
       <open-bpmn:auto-align />
@@ -9,7 +9,7 @@
     <bpmn:sequenceFlow id="Flow_0gtu7py" sourceRef="Activity_0u4tks2" targetRef="Gateway_1wb2js7">
       <bpmn:documentation id="documentation_z78lhw" />
     </bpmn:sequenceFlow>
-    <bpmn:startEvent id="StartEvent_1" name="Start">
+    <bpmn:startEvent id="StartEvent_1" name="Inicio">
       <bpmn:documentation id="documentation_mAf9vg" />
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -22,7 +22,7 @@
       </bpmn:extensionElements>
       <bpmn:outgoing>Flow_06xx28v</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Activity_0u4tks2" name="First Classification" zeebe:modelerTemplate="user-task-template" zeebe:modelerTemplateVersion="14" zeebe:modelerTemplateIcon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAdnJLH8AAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+kIBxENMN6rFDQAAAQmSURBVEjHnZRbiFVlGIaf/19r7b32aWYcGw/EdJBAmkzSQkM0Nbwp66KIDhQUUZiUBUpJN112YRcV1FRgFyWdEFEhEzHpQA1mpiV6kw6eatA57L1n73Ve/6ELKcLjzHx3//dfPLzf+32v4DI1cOCA0NJ/OFH2iXaULBweGa2ErfETKmp/tvGVNf1MopyLG4eOHLuuo6tnd6lSe1VKp88gphkhK3muesMoWb10+cpZP+zbs2uiAHlxo9rZvbVaq91T8Fw8z6PguRQLBUqVKqVymVzbF956+72+KQEGfjsyr1Qqr7AACKQQSCGRUuIVC3i+j+t6jNaby6YE6O6ZVUY6WCTGgrGgLQghcKSD67oIKemoVbsmCnD//1DKoLQFLLk2ZEqjtb7wKQQg0FqT5MnQlBScOX0yaoURYZySpDlZrtDGYIzFGoMrJVII/KI3MCUFPV2VoXYYUfBccqXJcoVSGm00SimSJKZarRzb+NK6wSkpGDx5qj3eahPFKUmakuYZWa7Ic0WaxGiVo9J402TuQFzc2LbvwKBfKs2x1pIrRZrlRFHE8N9nyYLmL2+89vLdkwFccgdhFG2P4oQoSYmSlDAMaDfrNEbOUx8bS5lkuZcAWo0Pcm3WCxBpEpPGMXEUUq7WsFrdPFnAJQrWPvnQYNAYfS4LmocdLOVKhe6eGZQqVRyv2Ltj709bppxFX+/fJpasvfVx2/vXUwt6Fy+VtkqxXMYiMEbT092J7CzM7306Gdr/ybFDkzL589/7Z8Yd9Z1eobBYWsmd6hFG24ZWENIKQqKgxV2397Fn5CuOplupRLM/Wmjv3fD8A+vCCY3Im60/Lta8xdNK3UwvzaTWUUTnKVJAR9ln+aKFDMtTnPB3IlxBQ5xZ8237yyOPvr/ypmuavH3gi86mOH5/0fURDoBmUB3ktrlLcK1PI2tysLWXH/PNSEfiuyVqlW5aqj3HUbXtwIKrjmjTdxvv8Ofmh32nTM3rRAqH1MS0dZPxfIyWqhOrEKMtJrXMEL2MNEYYb4zTHGsxJ1u06N01m3+9ooJ69azjtQUlp0zsxzhCktuM2ARENiAzCSAQAjxZxFow1mAv5CJD8amVwJUBI2NjODbDl2UqpRaOlGg0mY3JRIwRBixYY3FSh8TE5GlGnubkaY5NgwVX9eDBrmeP7mp8uvs85+4rV32EdEAYjNBIRyLEhWWzykBkMMIhChLiMCGNMkRm500oix7bsqI/66yvdTyJdATSFTj/AQR5rNABlNwKrfE2YTMkGk8QcSn5+c0/S9eMihvDvhcbYmR4TJzekLpBVRYk/8KshbieoSJN4mVEQUIapOSJppvpf0w4TQE+3PFOx/fnv1lli2pZ0S/ODxjtDKJx3LCmfVs77gj3hnPhiXKHuj61idix6pbV/eufef2yB/cPIhgUya+/QZIAAAAASUVORK5CYII=">
+    <bpmn:userTask id="Activity_0u4tks2" name="Primera Clasificación" zeebe:modelerTemplate="user-task-template" zeebe:modelerTemplateVersion="14" zeebe:modelerTemplateIcon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAdnJLH8AAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+kIBxENMN6rFDQAAAQmSURBVEjHnZRbiFVlGIaf/19r7b32aWYcGw/EdJBAmkzSQkM0Nbwp66KIDhQUUZiUBUpJN112YRcV1FRgFyWdEFEhEzHpQA1mpiV6kw6eatA57L1n73Ve/6ELKcLjzHx3//dfPLzf+32v4DI1cOCA0NJ/OFH2iXaULBweGa2ErfETKmp/tvGVNf1MopyLG4eOHLuuo6tnd6lSe1VKp88gphkhK3muesMoWb10+cpZP+zbs2uiAHlxo9rZvbVaq91T8Fw8z6PguRQLBUqVKqVymVzbF956+72+KQEGfjsyr1Qqr7AACKQQSCGRUuIVC3i+j+t6jNaby6YE6O6ZVUY6WCTGgrGgLQghcKSD67oIKemoVbsmCnD//1DKoLQFLLk2ZEqjtb7wKQQg0FqT5MnQlBScOX0yaoURYZySpDlZrtDGYIzFGoMrJVII/KI3MCUFPV2VoXYYUfBccqXJcoVSGm00SimSJKZarRzb+NK6wSkpGDx5qj3eahPFKUmakuYZWa7Ic0WaxGiVo9J402TuQFzc2LbvwKBfKs2x1pIrRZrlRFHE8N9nyYLmL2+89vLdkwFccgdhFG2P4oQoSYmSlDAMaDfrNEbOUx8bS5lkuZcAWo0Pcm3WCxBpEpPGMXEUUq7WsFrdPFnAJQrWPvnQYNAYfS4LmocdLOVKhe6eGZQqVRyv2Ltj709bppxFX+/fJpasvfVx2/vXUwt6Fy+VtkqxXMYiMEbT092J7CzM7306Gdr/ybFDkzL589/7Z8Yd9Z1eobBYWsmd6hFG24ZWENIKQqKgxV2397Fn5CuOplupRLM/Wmjv3fD8A+vCCY3Im60/Lta8xdNK3UwvzaTWUUTnKVJAR9ln+aKFDMtTnPB3IlxBQ5xZ8237yyOPvr/ypmuavH3gi86mOH5/0fURDoBmUB3ktrlLcK1PI2tysLWXH/PNSEfiuyVqlW5aqj3HUbXtwIKrjmjTdxvv8Ofmh32nTM3rRAqH1MS0dZPxfIyWqhOrEKMtJrXMEL2MNEYYb4zTHGsxJ1u06N01m3+9ooJ69azjtQUlp0zsxzhCktuM2ARENiAzCSAQAjxZxFow1mAv5CJD8amVwJUBI2NjODbDl2UqpRaOlGg0mY3JRIwRBixYY3FSh8TE5GlGnubkaY5NgwVX9eDBrmeP7mp8uvs85+4rV32EdEAYjNBIRyLEhWWzykBkMMIhChLiMCGNMkRm500oix7bsqI/66yvdTyJdATSFTj/AQR5rNABlNwKrfE2YTMkGk8QcSn5+c0/S9eMihvDvhcbYmR4TJzekLpBVRYk/8KshbieoSJN4mVEQUIapOSJppvpf0w4TQE+3PFOx/fnv1lli2pZ0S/ODxjtDKJx3LCmfVs77gj3hnPhiXKHuj61idix6pbV/eufef2yB/cPIhgUya+/QZIAAAAASUVORK5CYII=">
       <bpmn:documentation id="documentation_8N8ASw" />
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -34,7 +34,7 @@
       <bpmn:incoming>Flow_09nbrty</bpmn:incoming>
       <bpmn:outgoing>Flow_0gtu7py</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="Event_0un11hi" name="End">
+    <bpmn:endEvent id="Event_0un11hi" name="Fin">
       <bpmn:documentation id="documentation_pjGeXg" />
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -50,7 +50,7 @@
     <bpmn:sequenceFlow id="Flow_09nbrty" sourceRef="script-get-operations-catalog" targetRef="Activity_0u4tks2">
       <bpmn:documentation id="documentation_DqKG5g" />
     </bpmn:sequenceFlow>
-    <bpmn:scriptTask id="script-get-operations-catalog" name="Get Classification Info">
+    <bpmn:scriptTask id="script-get-operations-catalog" name="Obtener Información de Clasificación">
       <bpmn:documentation id="documentation_rHgjqg" />
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="worker-get-classification-info" />
@@ -71,11 +71,11 @@
       <bpmn:outgoing>Flow_0kyi97i</bpmn:outgoing>
       <bpmn:outgoing>Flow_1kxfzg9</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_0kyi97i" name="Si" sourceRef="Gateway_1wb2js7" targetRef="Activity_0spqd3n">
+    <bpmn:sequenceFlow id="Flow_0kyi97i" name="Sí" sourceRef="Gateway_1wb2js7" targetRef="Activity_0spqd3n">
       <bpmn:documentation id="documentation_j2eF5w" />
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=requireExpertClassification = true</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:userTask id="Activity_0spqd3n" name="Expert Classification">
+    <bpmn:userTask id="Activity_0spqd3n" name="Clasificación Experta">
       <bpmn:documentation id="documentation_MNdGzQ" />
       <bpmn:extensionElements>
         <zeebe:userTask />
