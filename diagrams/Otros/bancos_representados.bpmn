@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0vhntir" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.39.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_1kozx0n" isExecutable="true">
+    <bpmn:subProcess id="Activity_07ka6m4">
+      <bpmn:userTask id="Activity_14yd4mm" name="Revision de correo">
+        <bpmn:extensionElements>
+          <zeebe:userTask />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_13xqgvx</bpmn:incoming>
+        <bpmn:outgoing>Flow_1aj2ngs</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_0tpk5uf" name="Revisión de factura y registra apunte">
+        <bpmn:extensionElements>
+          <zeebe:userTask />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1aj2ngs</bpmn:incoming>
+        <bpmn:outgoing>Flow_0wt244i</bpmn:outgoing>
+        <bpmn:multiInstanceLoopCharacteristics isSequential="true" />
+      </bpmn:userTask>
+      <bpmn:userTask id="Activity_1u6nm76" name="Registro en Corona">
+        <bpmn:extensionElements>
+          <zeebe:userTask />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_0wt244i</bpmn:incoming>
+        <bpmn:outgoing>Flow_05fqba4</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:endEvent id="Event_1r2q1c4">
+        <bpmn:incoming>Flow_05fqba4</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_13xqgvx" sourceRef="Event_1dlgxwn" targetRef="Activity_14yd4mm" />
+      <bpmn:sequenceFlow id="Flow_1aj2ngs" sourceRef="Activity_14yd4mm" targetRef="Activity_0tpk5uf" />
+      <bpmn:sequenceFlow id="Flow_0wt244i" sourceRef="Activity_0tpk5uf" targetRef="Activity_1u6nm76" />
+      <bpmn:sequenceFlow id="Flow_05fqba4" sourceRef="Activity_1u6nm76" targetRef="Event_1r2q1c4" />
+      <bpmn:startEvent id="Event_1dlgxwn">
+        <bpmn:outgoing>Flow_13xqgvx</bpmn:outgoing>
+      </bpmn:startEvent>
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1kozx0n">
+      <bpmndi:BPMNShape id="Activity_07ka6m4_di" bpmnElement="Activity_07ka6m4" isExpanded="true">
+        <dc:Bounds x="140" y="80" width="870" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0c9lco0" bpmnElement="Activity_14yd4mm" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_16e9813" bpmnElement="Activity_0tpk5uf" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="490" y="150" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0d2o1gr" bpmnElement="Activity_1u6nm76" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="650" y="150" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0n8vc77" bpmnElement="Event_1r2q1c4" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="812" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_182b6je_di" bpmnElement="Event_1dlgxwn" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="242" y="172" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_0dm3dsi" bpmnElement="Flow_13xqgvx">
+        <di:waypoint x="278" y="190" />
+        <di:waypoint x="330" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0gn64u9" bpmnElement="Flow_1aj2ngs">
+        <di:waypoint x="430" y="190" />
+        <di:waypoint x="490" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_0uz1fao" bpmnElement="Flow_0wt244i">
+        <di:waypoint x="590" y="190" />
+        <di:waypoint x="650" y="190" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_1sg7d78" bpmnElement="Flow_05fqba4">
+        <di:waypoint x="750" y="190" />
+        <di:waypoint x="812" y="190" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

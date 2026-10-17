@@ -1,0 +1,24 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "4dd92a3"
+  },
+  "schemaVersion": 18,
+  "id": "Inicio",
+  "components": [
+    {
+      "label": "Entrada estructurada",
+      "type": "checkbox",
+      "layout": {
+        "row": "Row_1ul2wum",
+        "columns": null
+      },
+      "id": "Field_00u3l10",
+      "key": "requestStructured",
+      "defaultValue": false
+    }
+  ],
+  "type": "default"
+}

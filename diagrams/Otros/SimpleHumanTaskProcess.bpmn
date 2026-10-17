@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             id="SimpleHumanTaskProcess"
+             targetNamespace="http://www.example.org/SimpleHumanTaskProcess">
+    <process id="SimpleHumanTask" isExecutable="true">
+        <startEvent id="StartEvent" name="Inicio" />
+        <sequenceFlow id="Flow1" sourceRef="StartEvent" targetRef="HumanTask" />
+        <userTask id="HumanTask" name="Tarea Humana">
+            <documentation>Esta tarea requiere la intervención de un usuario humano.</documentation>
+        </userTask>
+        <sequenceFlow id="Flow2" sourceRef="HumanTask" targetRef="EndEvent" />
+        <endEvent id="EndEvent" name="Fin" />
+    </process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_SimpleHumanTask">
+        <bpmndi:BPMNPlane bpmnElement="SimpleHumanTask" id="BPMNPlane_SimpleHumanTask">
+            <bpmndi:BPMNShape bpmnElement="StartEvent" id="StartEvent_Shape">
+                <omgdc:Bounds x="100" y="100" width="36" height="36" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow1" id="Flow1_Edge">
+                <omgdi:waypoint x="136" y="118" />
+                <omgdi:waypoint x="200" y="118" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="HumanTask" id="HumanTask_Shape">
+                <omgdc:Bounds x="200" y="100" width="80" height="40" />
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="Flow2" id="Flow2_Edge">
+                <omgdi:waypoint x="280" y="118" />
+                <omgdi:waypoint x="350" y="118" />
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNShape bpmnElement="EndEvent" id="EndEvent_Shape">
+                <omgdc:Bounds x="350" y="100" width="36" height="36" />
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</definitions>

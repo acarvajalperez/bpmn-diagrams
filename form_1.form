@@ -1,0 +1,65 @@
+{
+  "components": [
+    {
+      "label": "Proponente",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0iq6yma",
+        "columns": null
+      },
+      "id": "Field_0uxt5v3",
+      "key": "textfield_proponente",
+      "validate": {
+        "required": true,
+        "validationType": "email"
+      },
+      "properties": {}
+    },
+    {
+      "label": "Descripción inicitiva",
+      "type": "textarea",
+      "layout": {
+        "row": "Row_0k9p1ua",
+        "columns": 16
+      },
+      "id": "Field_0gipsiz",
+      "key": "descripcion_inicitiva",
+      "defaultValue": "Descripcion"
+    },
+    {
+      "label": "Select",
+      "values": [
+        {
+          "label": "Opcion1",
+          "value": "Opcion1"
+        },
+        {
+          "label": "Opcion2",
+          "value": "Opcion2"
+        }
+      ],
+      "type": "select",
+      "layout": {
+        "row": "Row_0tvlo3f",
+        "columns": null
+      },
+      "id": "Field_0kbcjpl",
+      "key": "select_user",
+      "validate": {
+        "required": false
+      },
+      "defaultValue": "Opcion1",
+      "searchable": true
+    }
+  ],
+  "type": "default",
+  "id": "Form1",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.6.0",
+  "versionTag": "1",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.35.0"
+  },
+  "schemaVersion": 18
+}

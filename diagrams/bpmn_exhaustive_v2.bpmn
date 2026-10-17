@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:drools="http://www.jboss.org/drools" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Exhaustive BPMN 2.0.2 Generator" exporterVersion="1.0">
+  <bpmn:category id="category_812c72fa">
+    <bpmn:categoryValue id="categoryValue_8f07c6f9" value="Group Value" />
+  </bpmn:category>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:startEvent id="startEvent_18dd287c" name="Start None" />
+    <bpmn:startEvent id="startEvent_2e1fb8ef" name="Start Message">
+      <bpmn:messageEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:startEvent id="startEvent_d352dddb" name="Start Timer">
+      <bpmn:timerEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:startEvent id="startEvent_7d253809" name="Start Conditional">
+      <bpmn:conditionalEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:startEvent id="startEvent_5aaccd85" name="Start Signal">
+      <bpmn:signalEventDefinition />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="endEvent_aec61db1" name="End None" />
+    <bpmn:endEvent id="endEvent_38575535" name="End Message">
+      <bpmn:messageEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_aead8fdb" name="End Escalation">
+      <bpmn:escalationEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_18118b4b" name="End Error">
+      <bpmn:errorEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_5e5e5956" name="End Cancel">
+      <bpmn:cancelEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_a6e43444" name="End Compensation">
+      <bpmn:compensateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_1c418c04" name="End Signal">
+      <bpmn:signalEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:endEvent id="endEvent_5e180bb3" name="End Terminate">
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="exclusiveGateway_ad208970" name="Exclusive (XOR)" />
+    <bpmn:inclusiveGateway id="inclusiveGateway_680e0a49" name="Inclusive (OR)" />
+    <bpmn:parallelGateway id="parallelGateway_65e10c44" name="Parallel (AND)" />
+    <bpmn:eventBasedGateway id="eventBasedGateway_c38f324a" name="Event-Based" />
+    <bpmn:eventBasedGateway id="eventBasedGateway_52c85009" name="Event-Based Instantiation" instantiate="true" eventGatewayType="Exclusive" />
+    <bpmn:complexGateway id="complexGateway_c2d25d9f" name="Complex" />
+    <bpmn:task id="task_8799c1a7" name="Abstract Task" />
+    <bpmn:scriptTask id="scriptTask_9bb76406" name="Script Task" />
+    <bpmn:userTask id="userTask_f24c098e" name="User Task" />
+    <bpmn:userTask id="userTask_27516c12" name="MI Parallel">
+      <bpmn:multiInstanceLoopCharacteristics isSequential="false" />
+    </bpmn:userTask>
+    <bpmn:userTask id="userTask_bf3ac9b1" name="MI Sequential">
+      <bpmn:multiInstanceLoopCharacteristics isSequential="true" />
+    </bpmn:userTask>
+    <bpmn:userTask id="userTask_874480d9" name="Standard Loop">
+      <bpmn:standardLoopCharacteristics />
+    </bpmn:userTask>
+    <bpmn:manualTask id="manualTask_6c164628" name="Manual Task" />
+    <bpmn:serviceTask id="serviceTask_fdfdd67d" name="Service Task" />
+    <bpmn:sendTask id="sendTask_9e7fce05" name="Send Task" />
+    <bpmn:receiveTask id="receiveTask_29917843" name="Receive Task" />
+    <bpmn:businessRuleTask id="businessRuleTask_d0d03093" name="Business Rule Task" />
+    <bpmn:callActivity id="callActivity_b989bee8" name="Call Activity" />
+    <bpmn:subProcess id="subProcess_bf51e2b0" name="Normal SubProcess" />
+    <bpmn:subProcess id="subProcess_b7d5d145" name="Event SubProcess" triggeredByEvent="true" />
+    <bpmn:adHocSubProcess id="adHocSubProcess_7ef23ae3" name="Ad-Hoc SubProcess" />
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_ef25a606" name="Throw None" />
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_e93314bc" name="Throw Message">
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_1cf8f75f" name="Throw Escalation">
+      <bpmn:escalationEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_a794c6dd" name="Throw Link">
+      <bpmn:linkEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_83c77d11" name="Throw Compensation">
+      <bpmn:compensateEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateThrowEvent id="intermediateThrowEvent_5fa8653c" name="Throw Signal">
+      <bpmn:signalEventDefinition />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:intermediateCatchEvent id="intermediateCatchEvent_0661abc8" name="Catch Message">
+      <bpmn:messageEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="intermediateCatchEvent_1c67f615" name="Catch Timer">
+      <bpmn:timerEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="intermediateCatchEvent_6e160dc7" name="Catch Conditional">
+      <bpmn:conditionalEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="intermediateCatchEvent_537c5149" name="Catch Link">
+      <bpmn:linkEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="intermediateCatchEvent_be9137a2" name="Catch Signal">
+      <bpmn:signalEventDefinition />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_10d6b490" name="Interrupting Message" attachedToRef="task_8799c1a7" cancelActivity="true">
+      <bpmn:messageEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_1f3a2d41" name="Non-Int Timer" attachedToRef="task_8799c1a7" cancelActivity="false">
+      <bpmn:timerEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_8441db71" name="Boundary Error" attachedToRef="task_8799c1a7">
+      <bpmn:errorEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_3fd0c4a1" name="Boundary Escalation" attachedToRef="task_8799c1a7" cancelActivity="true">
+      <bpmn:escalationEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_3d1ece7b" name="Boundary Cancel" attachedToRef="task_8799c1a7">
+      <bpmn:cancelEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="boundaryEvent_5ca98d38" name="Boundary Compensation" attachedToRef="task_8799c1a7">
+      <bpmn:compensateEventDefinition />
+    </bpmn:boundaryEvent>
+    <bpmn:dataObject id="dataObject_27f71d3f" />
+    <bpmn:transaction id="transaction_71c8929d" name="Transaction SubProcess" />
+    <bpmn:dataStoreReference id="dataStoreReference_d3c384f3" name="Data Store" />
+    <bpmn:dataObjectReference id="dataObjectReference_3f2562ed" name="Data Object" dataObjectRef="dataObject_27f71d3f" />
+    <bpmn:textAnnotation id="textAnnotation_a435225a">
+      <bpmn:text>This is a Text Annotation</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:group id="group_ecd333da" categoryValueRef="categoryValue_8f07c6f9" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="startEvent_18dd287c_di" bpmnElement="startEvent_18dd287c">
+        <dc:Bounds x="50" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="startEvent_2e1fb8ef_di" bpmnElement="startEvent_2e1fb8ef">
+        <dc:Bounds x="200" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="startEvent_d352dddb_di" bpmnElement="startEvent_d352dddb">
+        <dc:Bounds x="350" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="startEvent_7d253809_di" bpmnElement="startEvent_7d253809">
+        <dc:Bounds x="500" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="startEvent_5aaccd85_di" bpmnElement="startEvent_5aaccd85">
+        <dc:Bounds x="650" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateCatchEvent_0661abc8_di" bpmnElement="intermediateCatchEvent_0661abc8">
+        <dc:Bounds x="800" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateCatchEvent_1c67f615_di" bpmnElement="intermediateCatchEvent_1c67f615">
+        <dc:Bounds x="950" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateCatchEvent_6e160dc7_di" bpmnElement="intermediateCatchEvent_6e160dc7">
+        <dc:Bounds x="1100" y="50" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateCatchEvent_537c5149_di" bpmnElement="intermediateCatchEvent_537c5149">
+        <dc:Bounds x="50" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateCatchEvent_be9137a2_di" bpmnElement="intermediateCatchEvent_be9137a2">
+        <dc:Bounds x="200" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_ef25a606_di" bpmnElement="intermediateThrowEvent_ef25a606">
+        <dc:Bounds x="350" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_e93314bc_di" bpmnElement="intermediateThrowEvent_e93314bc">
+        <dc:Bounds x="500" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_1cf8f75f_di" bpmnElement="intermediateThrowEvent_1cf8f75f">
+        <dc:Bounds x="650" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_a794c6dd_di" bpmnElement="intermediateThrowEvent_a794c6dd">
+        <dc:Bounds x="800" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_83c77d11_di" bpmnElement="intermediateThrowEvent_83c77d11">
+        <dc:Bounds x="950" y="170" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="intermediateThrowEvent_5fa8653c_di" bpmnElement="intermediateThrowEvent_5fa8653c">
+        <dc:Bounds x="1200" y="350" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_aec61db1_di" bpmnElement="endEvent_aec61db1">
+        <dc:Bounds x="50" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_38575535_di" bpmnElement="endEvent_38575535">
+        <dc:Bounds x="200" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_aead8fdb_di" bpmnElement="endEvent_aead8fdb">
+        <dc:Bounds x="350" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_18118b4b_di" bpmnElement="endEvent_18118b4b">
+        <dc:Bounds x="500" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_5e5e5956_di" bpmnElement="endEvent_5e5e5956">
+        <dc:Bounds x="650" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_a6e43444_di" bpmnElement="endEvent_a6e43444">
+        <dc:Bounds x="800" y="290" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_1c418c04_di" bpmnElement="endEvent_1c418c04">
+        <dc:Bounds x="1360" y="225" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="endEvent_5e180bb3_di" bpmnElement="endEvent_5e180bb3">
+        <dc:Bounds x="1520" y="250" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="task_8799c1a7_di" bpmnElement="task_8799c1a7">
+        <dc:Bounds x="50" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="userTask_f24c098e_di" bpmnElement="userTask_f24c098e">
+        <dc:Bounds x="200" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="manualTask_6c164628_di" bpmnElement="manualTask_6c164628">
+        <dc:Bounds x="350" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="serviceTask_fdfdd67d_di" bpmnElement="serviceTask_fdfdd67d">
+        <dc:Bounds x="500" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="scriptTask_9bb76406_di" bpmnElement="scriptTask_9bb76406">
+        <dc:Bounds x="650" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="businessRuleTask_d0d03093_di" bpmnElement="businessRuleTask_d0d03093">
+        <dc:Bounds x="800" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="sendTask_9e7fce05_di" bpmnElement="sendTask_9e7fce05">
+        <dc:Bounds x="950" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="receiveTask_29917843_di" bpmnElement="receiveTask_29917843">
+        <dc:Bounds x="1100" y="410" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="userTask_27516c12_di" bpmnElement="userTask_27516c12">
+        <dc:Bounds x="50" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="userTask_bf3ac9b1_di" bpmnElement="userTask_bf3ac9b1">
+        <dc:Bounds x="200" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="userTask_874480d9_di" bpmnElement="userTask_874480d9">
+        <dc:Bounds x="350" y="530" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_10d6b490_di" bpmnElement="boundaryEvent_10d6b490">
+        <dc:Bounds x="500" y="530" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_1f3a2d41_di" bpmnElement="boundaryEvent_1f3a2d41">
+        <dc:Bounds x="650" y="530" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_8441db71_di" bpmnElement="boundaryEvent_8441db71">
+        <dc:Bounds x="800" y="530" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_3fd0c4a1_di" bpmnElement="boundaryEvent_3fd0c4a1">
+        <dc:Bounds x="950" y="530" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_3d1ece7b_di" bpmnElement="boundaryEvent_3d1ece7b">
+        <dc:Bounds x="1100" y="530" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="boundaryEvent_5ca98d38_di" bpmnElement="boundaryEvent_5ca98d38">
+        <dc:Bounds x="50" y="650" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="exclusiveGateway_ad208970_di" bpmnElement="exclusiveGateway_ad208970">
+        <dc:Bounds x="200" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="parallelGateway_65e10c44_di" bpmnElement="parallelGateway_65e10c44">
+        <dc:Bounds x="350" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="inclusiveGateway_680e0a49_di" bpmnElement="inclusiveGateway_680e0a49">
+        <dc:Bounds x="500" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="complexGateway_c2d25d9f_di" bpmnElement="complexGateway_c2d25d9f">
+        <dc:Bounds x="650" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="eventBasedGateway_c38f324a_di" bpmnElement="eventBasedGateway_c38f324a">
+        <dc:Bounds x="800" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="eventBasedGateway_52c85009_di" bpmnElement="eventBasedGateway_52c85009">
+        <dc:Bounds x="950" y="650" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="subProcess_bf51e2b0_di" bpmnElement="subProcess_bf51e2b0">
+        <dc:Bounds x="50" y="770" width="200" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="subProcess_b7d5d145_di" bpmnElement="subProcess_b7d5d145">
+        <dc:Bounds x="200" y="770" width="200" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="transaction_71c8929d_di" bpmnElement="transaction_71c8929d">
+        <dc:Bounds x="350" y="770" width="200" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="adHocSubProcess_7ef23ae3_di" bpmnElement="adHocSubProcess_7ef23ae3">
+        <dc:Bounds x="500" y="770" width="200" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="callActivity_b989bee8_di" bpmnElement="callActivity_b989bee8">
+        <dc:Bounds x="650" y="770" width="200" height="160" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="dataObjectReference_3f2562ed_di" bpmnElement="dataObjectReference_3f2562ed">
+        <dc:Bounds x="50" y="1010" width="36" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="dataStoreReference_d3c384f3_di" bpmnElement="dataStoreReference_d3c384f3">
+        <dc:Bounds x="200" y="1010" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="textAnnotation_a435225a_di" bpmnElement="textAnnotation_a435225a">
+        <dc:Bounds x="350" y="1010" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="group_ecd333da_di" bpmnElement="group_ecd333da">
+        <dc:Bounds x="500" y="1010" width="150" height="150" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

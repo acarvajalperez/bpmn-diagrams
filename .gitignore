@@ -1,0 +1,11 @@
+# Este repositorio versiona unicamente diagramas BPMN.
+# Por defecto se ignora todo y solo se incluyen los diagramas.
+*
+!*/
+!*.bpmn
+!*.form
+!.gitignore
+
+# Codigo / configuracion ajena a los diagramas
+acp/
+flowable/

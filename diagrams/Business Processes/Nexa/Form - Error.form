@@ -1,0 +1,22 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "4dd92a3"
+  },
+  "schemaVersion": 18,
+  "id": "form-error",
+  "components": [
+    {
+      "content": "<h1>Error Form</h1>",
+      "type": "html",
+      "layout": {
+        "row": "Row_1b76x5u",
+        "columns": null
+      },
+      "id": "Field_1erbsgt"
+    }
+  ],
+  "type": "default"
+}

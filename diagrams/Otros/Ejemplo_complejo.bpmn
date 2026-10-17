@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+                  id="Definitions_1" 
+                  targetNamespace="http://bpmn.io/schema/bpmn" 
+                  exporter="Camunda Modeler" 
+                  exporterVersion="4.6.0">
+  
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_1" name="Pool 1 (Main Process)" processRef="Process_1" />
+    <bpmn:participant id="Participant_2" name="Pool 2 (External)" />
+    <bpmn:messageFlow id="MessageFlow_1" sourceRef="SendTask_1" targetRef="Participant_2" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_1" name="Lane A">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>UserTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ManualTask_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_2" name="Lane B">
+        <bpmn:flowNodeRef>ServiceTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ScriptTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>BusinessRuleTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SendTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ReceiveTask_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ExclusiveGateway_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ParallelGateway_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>InclusiveGateway_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ComplexGateway_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EventBasedGateway_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>SubProcess_1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <!-- Events -->
+    <bpmn:startEvent id="StartEvent_1" name="Start None" />
+    <bpmn:endEvent id="EndEvent_1" name="End None" />
+    <bpmn:endEvent id="EndEvent_Terminate" name="Terminate">
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="IntermediateCatchTimer" name="Timer Catch">
+      <bpmn:timerEventDefinition />
+    </bpmn:intermediateCatchEvent>
+
+    <!-- Tasks -->
+    <bpmn:task id="Task_1" name="Abstract Task" />
+    <bpmn:userTask id="UserTask_1" name="User Task" />
+    <bpmn:manualTask id="ManualTask_1" name="Manual Task" />
+    <bpmn:serviceTask id="ServiceTask_1" name="Service Task" />
+    <bpmn:scriptTask id="ScriptTask_1" name="Script Task" />
+    <bpmn:businessRuleTask id="BusinessRuleTask_1" name="Business Rule Task" />
+    <bpmn:sendTask id="SendTask_1" name="Send Task" />
+    <bpmn:receiveTask id="ReceiveTask_1" name="Receive Task" />
+
+    <!-- Gateways -->
+    <bpmn:exclusiveGateway id="ExclusiveGateway_1" name="XOR" />
+    <bpmn:parallelGateway id="ParallelGateway_1" name="AND" />
+    <bpmn:inclusiveGateway id="InclusiveGateway_1" name="OR" />
+    <bpmn:complexGateway id="ComplexGateway_1" name="Complex" />
+    <bpmn:eventBasedGateway id="EventBasedGateway_1" name="Event Based" />
+
+    <!-- Subprocess -->
+    <bpmn:subProcess id="SubProcess_1" name="Expanded SubProcess">
+      <bpmn:startEvent id="SubStart_1" />
+      <bpmn:task id="SubTask_1" name="Sub Task" />
+      <bpmn:endEvent id="SubEnd_1" />
+    </bpmn:subProcess>
+
+    <!-- Data Elements -->
+    <bpmn:dataObjectReference id="DataObjectRef_1" name="Data Object" dataObjectRef="DataObject_1" />
+    <bpmn:dataObject id="DataObject_1" />
+    <bpmn:dataStoreReference id="DataStoreRef_1" name="Data Store" />
+
+    <!-- Annotations -->
+    <bpmn:textAnnotation id="TextAnnotation_1">
+      <bpmn:text>This is a text annotation</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_1" sourceRef="Task_1" targetRef="TextAnnotation_1" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds x="120" y="80" width="1200" height="600" />
+      </bpmndi:BPMNShape>
+      
+      <!-- Pools and Lanes Di can be extended here... -->
+      
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

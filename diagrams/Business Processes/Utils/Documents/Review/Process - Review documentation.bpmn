@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="4dd92a3" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.8.0">
+  <bpmn:process id="process-review-documentation" name="Process - Review Documentation" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:versionTag value="1.0" />
+      <zeebe:properties>
+        <zeebe:property name="camundaModeler:exampleOutputJson" value="" />
+      </zeebe:properties>
+    </bpmn:extensionElements>
+    <bpmn:userTask id="Activity_03hdldl" name="Check documentation 2" zeebe:modelerTemplate="Template_1r89u7p" zeebe:modelerTemplateVersion="2" zeebe:modelerTemplateIcon="data:image/png;base64,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">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="form-check-documentation" bindingType="versionTag" versionTag="latest" />
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="=0124" target="catalogId" />
+          <zeebe:output source="=workload" target="workload" />
+          <zeebe:output source="=form_is_document_ok" target="is_document_ok" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_019hlma</bpmn:incoming>
+      <bpmn:outgoing>Flow_0qj6bvd</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0auoxgx" name="Check documentation su">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=0124" target="catalogId" />
+          <zeebe:output source="=workload" target="workload" />
+          <zeebe:output source="=form_is_document_ok" target="is_document_ok" />
+        </zeebe:ioMapping>
+        <zeebe:formDefinition formId="form-check-documentation" />
+        <zeebe:userTask />
+        <zeebe:taskSchedule dueDate="= now() + duration(&#34;PT2M&#34;)" followUpDate="" />
+        <zeebe:assignmentDefinition assignee="" candidateGroups="candidate_groups" candidateUsers="candidate_users" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0visdbb</bpmn:incoming>
+      <bpmn:outgoing>Flow_02w2yff</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_1uhips9" name="Correct documentation" zeebe:modelerTemplate="user-task-template" zeebe:modelerTemplateVersion="13" zeebe:modelerTemplateIcon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAdnJLH8AAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB+kIBxENMN6rFDQAAAQmSURBVEjHnZRbiFVlGIaf/19r7b32aWYcGw/EdJBAmkzSQkM0Nbwp66KIDhQUUZiUBUpJN112YRcV1FRgFyWdEFEhEzHpQA1mpiV6kw6eatA57L1n73Ve/6ELKcLjzHx3//dfPLzf+32v4DI1cOCA0NJ/OFH2iXaULBweGa2ErfETKmp/tvGVNf1MopyLG4eOHLuuo6tnd6lSe1VKp88gphkhK3muesMoWb10+cpZP+zbs2uiAHlxo9rZvbVaq91T8Fw8z6PguRQLBUqVKqVymVzbF956+72+KQEGfjsyr1Qqr7AACKQQSCGRUuIVC3i+j+t6jNaby6YE6O6ZVUY6WCTGgrGgLQghcKSD67oIKemoVbsmCnD//1DKoLQFLLk2ZEqjtb7wKQQg0FqT5MnQlBScOX0yaoURYZySpDlZrtDGYIzFGoMrJVII/KI3MCUFPV2VoXYYUfBccqXJcoVSGm00SimSJKZarRzb+NK6wSkpGDx5qj3eahPFKUmakuYZWa7Ic0WaxGiVo9J402TuQFzc2LbvwKBfKs2x1pIrRZrlRFHE8N9nyYLmL2+89vLdkwFccgdhFG2P4oQoSYmSlDAMaDfrNEbOUx8bS5lkuZcAWo0Pcm3WCxBpEpPGMXEUUq7WsFrdPFnAJQrWPvnQYNAYfS4LmocdLOVKhe6eGZQqVRyv2Ltj709bppxFX+/fJpasvfVx2/vXUwt6Fy+VtkqxXMYiMEbT092J7CzM7306Gdr/ybFDkzL589/7Z8Yd9Z1eobBYWsmd6hFG24ZWENIKQqKgxV2397Fn5CuOplupRLM/Wmjv3fD8A+vCCY3Im60/Lta8xdNK3UwvzaTWUUTnKVJAR9ln+aKFDMtTnPB3IlxBQ5xZ8237yyOPvr/ypmuavH3gi86mOH5/0fURDoBmUB3ktrlLcK1PI2tysLWXH/PNSEfiuyVqlW5aqj3HUbXtwIKrjmjTdxvv8Ofmh32nTM3rRAqH1MS0dZPxfIyWqhOrEKMtJrXMEL2MNEYYb4zTHGsxJ1u06N01m3+9ooJ69azjtQUlp0zsxzhCktuM2ARENiAzCSAQAjxZxFow1mAv5CJD8amVwJUBI2NjODbDl2UqpRaOlGg0mY3JRIwRBixYY3FSh8TE5GlGnubkaY5NgwVX9eDBrmeP7mp8uvs85+4rV32EdEAYjNBIRyLEhWWzykBkMMIhChLiMCGNMkRm500oix7bsqI/66yvdTyJdATSFTj/AQR5rNABlNwKrfE2YTMkGk8QcSn5+c0/S9eMihvDvhcbYmR4TJzekLpBVRYk/8KshbieoSJN4mVEQUIapOSJppvpf0w4TQE+3PFOx/fnv1lli2pZ0S/ODxjtDKJx3LCmfVs77gj3hnPhiXKHuj61idix6pbV/eufef2yB/cPIhgUya+/QZIAAAAASUVORK5CYII=">
+      <bpmn:extensionElements>
+        <zeebe:userTask />
+        <zeebe:ioMapping>
+          <zeebe:input source="0124" target="catalogId" />
+          <zeebe:output source="=workload" target="workload" />
+        </zeebe:ioMapping>
+        <zeebe:formDefinition formId="form-check-documentation" bindingType="versionTag" versionTag="latest" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xonvsr</bpmn:incoming>
+      <bpmn:outgoing>Flow_019hlma</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="Event_076tij7" name="end">
+      <bpmn:incoming>Flow_1ay2e34</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_019hlma" sourceRef="Activity_1uhips9" targetRef="Activity_03hdldl" />
+    <bpmn:sequenceFlow id="Flow_02w2yff" sourceRef="Activity_0auoxgx" targetRef="Gateway_0wckwvz" />
+    <bpmn:sequenceFlow id="Flow_0qj6bvd" sourceRef="Activity_03hdldl" targetRef="Gateway_0jy8dpo" />
+    <bpmn:sequenceFlow id="Flow_0visdbb" sourceRef="StartEvent_1" targetRef="Activity_0auoxgx" />
+    <bpmn:sequenceFlow id="Flow_1ay2e34" sourceRef="Gateway_1k35glg" targetRef="Event_076tij7" />
+    <bpmn:sequenceFlow id="Flow_1xonvsr" sourceRef="Gateway_1oqrigq" targetRef="Activity_1uhips9" />
+    <bpmn:exclusiveGateway id="Gateway_1k35glg">
+      <bpmn:incoming>Flow_0ppprg0</bpmn:incoming>
+      <bpmn:incoming>Flow_0a3ubia</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ay2e34</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_1oqrigq">
+      <bpmn:incoming>Flow_1o24ba2</bpmn:incoming>
+      <bpmn:incoming>Flow_0zkto6a</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xonvsr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_0jy8dpo" name="is document Ok?">
+      <bpmn:incoming>Flow_0qj6bvd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ppprg0</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0zkto6a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="Gateway_0wckwvz" name="Is document Ok?">
+      <bpmn:incoming>Flow_02w2yff</bpmn:incoming>
+      <bpmn:outgoing>Flow_0a3ubia</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1o24ba2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1o24ba2" name="No" sourceRef="Gateway_0wckwvz" targetRef="Gateway_1oqrigq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is_document_ok = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0zkto6a" name="No" sourceRef="Gateway_0jy8dpo" targetRef="Gateway_1oqrigq">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is_document_ok = false</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:startEvent id="StartEvent_1" name="start">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=workload" target="workload" />
+          <zeebe:output source="=&#34;&#34;" target="role_checker" />
+          <zeebe:output source="=&#34;&#34;" target="role_correcter" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0visdbb</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0a3ubia" name="Yes" sourceRef="Gateway_0wckwvz" targetRef="Gateway_1k35glg">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is_document_ok = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0ppprg0" name="Yes" sourceRef="Gateway_0jy8dpo" targetRef="Gateway_1k35glg">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=is_document_ok = true</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmn:escalation id="Escalation_0evbup8" name="Escalation_Check_Documentation_TimeOut" escalationCode="Escalation_Check_Documentation_TimeOut" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-review-documentation">
+      <bpmndi:BPMNShape id="Activity_15uvkdi_di" bpmnElement="Activity_0auoxgx" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="220" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_076tij7_di" bpmnElement="Event_076tij7" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="792" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="801" y="143" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1k35glg_di" bpmnElement="Gateway_1k35glg" isMarkerVisible="true">
+        <dc:Bounds x="715" y="93" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1oqrigq_di" bpmnElement="Gateway_1oqrigq" isMarkerVisible="true">
+        <dc:Bounds x="355" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0jy8dpo_di" bpmnElement="Gateway_0jy8dpo" isMarkerVisible="true">
+        <dc:Bounds x="715" y="175" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="778" y="193" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0wckwvz_di" bpmnElement="Gateway_0wckwvz" isMarkerVisible="true">
+        <dc:Bounds x="355" y="93" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="338" y="63" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="143" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0qtotnd" bpmnElement="Activity_1uhips9" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="440" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1vbzobu_di" bpmnElement="Activity_03hdldl" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="580" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_02w2yff_di" bpmnElement="Flow_02w2yff">
+        <di:waypoint x="320" y="118" />
+        <di:waypoint x="355" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0visdbb_di" bpmnElement="Flow_0visdbb">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="220" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ay2e34_di" bpmnElement="Flow_1ay2e34">
+        <di:waypoint x="765" y="118" />
+        <di:waypoint x="792" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1o24ba2_di" bpmnElement="Flow_1o24ba2">
+        <di:waypoint x="380" y="143" />
+        <di:waypoint x="380" y="175" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="388" y="142" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zkto6a_di" bpmnElement="Flow_0zkto6a">
+        <di:waypoint x="740" y="225" />
+        <di:waypoint x="740" y="280" />
+        <di:waypoint x="380" y="280" />
+        <di:waypoint x="380" y="225" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="143" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0a3ubia_di" bpmnElement="Flow_0a3ubia">
+        <di:waypoint x="405" y="118" />
+        <di:waypoint x="715" y="118" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420" y="100" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ppprg0_di" bpmnElement="Flow_0ppprg0">
+        <di:waypoint x="740" y="175" />
+        <di:waypoint x="740" y="143" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="746" y="144" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_09ydi6d" bpmnElement="Flow_019hlma">
+        <di:waypoint x="540" y="200" />
+        <di:waypoint x="580" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qj6bvd_di" bpmnElement="Flow_0qj6bvd">
+        <di:waypoint x="680" y="200" />
+        <di:waypoint x="715" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xonvsr_di" bpmnElement="Flow_1xonvsr">
+        <di:waypoint x="405" y="200" />
+        <di:waypoint x="440" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

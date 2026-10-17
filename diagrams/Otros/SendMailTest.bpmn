@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="4dd92a3" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="Process_1vamnpg" name="SendMailTest" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_11trrw6</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_11trrw6" sourceRef="StartEvent_1" targetRef="Activity_1amgysz" />
+    <bpmn:endEvent id="Event_06qldvj">
+      <bpmn:incoming>Flow_0ww4l1a</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ww4l1a" sourceRef="Activity_1amgysz" targetRef="Event_06qldvj" />
+    <bpmn:callActivity id="Activity_1amgysz" name="Enviar correo" zeebe:modelerTemplate="62affa38-20ea-4318-89da-3536ebd80461" zeebe:modelerTemplateVersion="1761005172116" zeebe:modelerTemplateIcon="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAYAAACpSkzOAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAdnJLH8AAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAN1wAADdcBQiibeAAAAAd0SU1FB+kHGg8hNjhiTEYAAANcSURBVEjHnZZdaFxFFIC/u5vtbgPb3Ma0QQiVQoRQy7YKVurPg/hUfFAsNWlFMJCnONGmmNs0JW2VYOqktmougj5IS23pDyTSB1/MkyUlAfVBiH8BE2jqDzF2YjZZm2T3+uDcZXa63d103u45d853zpkzc45Dhcv1vU3ACWA/kAPOA31KyLlK9jtlAYNeDId2DXEt9W3g7QA+nhdy5b5Bru/tBU4CjYY4qyOKGbJJ4LAScnhNINf3dgGngacs1RBwRMPeA/Za+q+BQ0rIb0uCXN/boiNosXTfaAPXrf+f1g49bogD4HOgRwk5UwByfa8K6AW6gPXGpptAzyq5C2lxKigWffLDbicazR0A3gW2GKolYEAXzGqVFr4PvGH8tKAjO6OEzJQ6x4U3TwbABdf3hoBOoBtIAtXAcWAT8HoIesUI+zPgqBLyzyJn9wCwTWfiFyXkH6FOCZlxfW8UmAJSxrYWExSmK62EbCsCqAc+APYB0dAp1/eu6UzEAQm8WCToBECVJbxTBPIgMApsLVJILwDP6FSZ5f6zPq/8eUcquNQfhZDXHn6IdCrNwo4F7jTkfao1IHNAB7AdWDSNRMpc2M3ASwAy9SQDz7ZyqK6J7PosmYaMCQP4FGhUQvpKyFXbVlWZaJpCZ0ZjP1Dz+zq+yEzmlSu1K8Rn4uHniBJS3ctQOVDe5YtLtzg3O12ozRZ8LZUyFCmRtiTwcr50biVwck7B/U/8lsgHB4yXAt0VUY3fFXFw2oB3gPpQHv0nSnIiyfLmZQBiszGi6bDS+UQJ+ddaQNUOzvfAI1aCJoBUZDFCYiph2/gK8MqVrp26agvyJZCK5LI7gVZgDFjV8O+AdpxgT5lnKjAj+ltDwjUBHFRCjhiys8BZd7DLCRyceTGQu8fZ1ukmWWs0xzxoWF+0cDUAj7q+d10JWXBZVMdAEHppAeL6OToK1BiqK/nUBQ5v6bcqbMc1+vsn1/eaK5gnmoEf9Z4Q8i/Qr1/zuxpfE3AKeN6yNQZ0KiHHrP+fAM4Au60zuaQb33S5Vv6c9u4xS3UZ6NEzQ79uAea6oTvxeMXDiet7jh6t+qyXO6y6uCH7FehWQl6973Fro+/Fg/8LpRfYYKnntSODdtGsGWQNkMeAV/UbeB7or3SA/A9IEhCdAd1d4QAAAABJRU5ErkJggg==">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="send-email-process" propagateAllChildVariables="false" propagateAllParentVariables="false" />
+        <zeebe:ioMapping>
+          <zeebe:input source="style1" target="htmlTemplate" />
+          <zeebe:input source="new" target="conversationMode" />
+          <zeebe:input source="nexa@grupoopplus.com" target="fromAddress" />
+          <zeebe:input source="acarvajalperez@gmail.com" target="toAddress" />
+          <zeebe:input source="Prueba de correo" target="subject" />
+          <zeebe:input source="Esto es una prueba de correo" target="body" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_11trrw6</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ww4l1a</bpmn:outgoing>
+    </bpmn:callActivity>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1vamnpg">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="150" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_06qldvj_di" bpmnElement="Event_06qldvj">
+        <dc:Bounds x="402" y="100" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1h397rf_di" bpmnElement="Activity_1amgysz">
+        <dc:Bounds x="240" y="78" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_11trrw6_di" bpmnElement="Flow_11trrw6">
+        <di:waypoint x="186" y="118" />
+        <di:waypoint x="240" y="118" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ww4l1a_di" bpmnElement="Flow_0ww4l1a">
+        <di:waypoint x="340" y="118" />
+        <di:waypoint x="402" y="118" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

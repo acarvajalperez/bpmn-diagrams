@@ -1,0 +1,49 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.7.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "4dd92a3"
+  },
+  "schemaVersion": 18,
+  "id": "ClassificationForm",
+  "components": [
+    {
+      "text": "# Clasificación",
+      "type": "text",
+      "layout": {
+        "row": "Row_0t0nwny",
+        "columns": null
+      },
+      "id": "Field_0ez8hlh"
+    },
+    {
+      "content": "",
+      "type": "html",
+      "layout": {
+        "row": "Row_1k8tkl5",
+        "columns": null
+      },
+      "id": "Field_1424g3y"
+    },
+    {
+      "label": "Operación",
+      "type": "select",
+      "layout": {
+        "row": "Row_10x12zo",
+        "columns": null
+      },
+      "id": "Field_13nrgh1",
+      "key": "selected_operation",
+      "disabled": false,
+      "description": "Selecciona la operación que necesites instanciar",
+      "valuesKey": "listOperations",
+      "searchable": true,
+      "validate": {
+        "required": true
+      },
+      "properties": { }
+    }
+  ],
+  "type": "default"
+}

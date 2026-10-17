@@ -1,0 +1,57 @@
+{
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.8.0",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "4dd92a3"
+  },
+  "schemaVersion": 19,
+  "id": "form-check-documentation",
+  "components": [
+    {
+      "label": "Group",
+      "components": [
+        {
+          "label": "Document preview",
+          "type": "documentPreview",
+          "layout": {
+            "row": "Row_0zmday4",
+            "columns": null
+          },
+          "id": "Field_1hnenqq"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_002rg5l",
+        "columns": 11
+      },
+      "id": "Field_1ylv96s"
+    },
+    {
+      "label": "Group",
+      "components": [
+        {
+          "label": "Docuemtno correcto?",
+          "type": "checkbox",
+          "layout": {
+            "row": "Row_1e4tmh3",
+            "columns": null
+          },
+          "id": "Field_1youh9l",
+          "key": "form_is_document_ok"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_002rg5l",
+        "columns": null
+      },
+      "id": "Field_0fell09"
+    }
+  ],
+  "type": "default",
+  "versionTag": "latest"
+}

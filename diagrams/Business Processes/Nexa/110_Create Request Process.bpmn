@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.51.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.7.0">
+  <bpmn:process id="process-create-request" name="Create Request Process" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Inicio">
+      <bpmn:outgoing>Flow_1t41ocd</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1t41ocd" sourceRef="StartEvent_1" targetRef="Activity_09r1dhr" />
+    <bpmn:scriptTask id="Activity_09r1dhr" name="Create New Request">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=uuid()" resultVariable="requestId" />
+        <zeebe:ioMapping>
+          <zeebe:output source="=requestId" target="requestId" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1t41ocd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h54bg2</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1nsg4sx" name="Fin">
+      <bpmn:incoming>Flow_0h54bg2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0h54bg2" sourceRef="Activity_09r1dhr" targetRef="Event_1nsg4sx" />
+    <bpmn:textAnnotation id="TextAnnotation_0nyr9wq">
+      <bpmn:text>fecha, lista operaciones, estado (ACTIVE, CLOSE), tipo (DEFAULT)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_16rblc6" associationDirection="None" sourceRef="Activity_09r1dhr" targetRef="TextAnnotation_0nyr9wq" />
+  </bpmn:process>
+  <bpmn:error id="Error_00gmwzj" name="Error_CreateNewRequest" errorCode="2" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process-create-request">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="172" y="170" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="177" y="213" width="26" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1qv7t5c_di" bpmnElement="Activity_09r1dhr" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="240" y="148" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1nsg4sx_di" bpmnElement="Event_1nsg4sx" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="382" y="170" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="392" y="213" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0nyr9wq_di" bpmnElement="TextAnnotation_0nyr9wq">
+        <dc:Bounds x="240" y="80" width="420" height="33" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1t41ocd_di" bpmnElement="Flow_1t41ocd">
+        <di:waypoint x="208" y="188" />
+        <di:waypoint x="240" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h54bg2_di" bpmnElement="Flow_0h54bg2">
+        <di:waypoint x="340" y="188" />
+        <di:waypoint x="382" y="188" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_16rblc6_di" bpmnElement="Association_16rblc6">
+        <di:waypoint x="290" y="148" />
+        <di:waypoint x="290" y="113" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
