@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Payment" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_Pago_Global" name="Subproceso Global de Pago" isExecutable="true">
+    <bpmn:startEvent id="Start_Pago" name="Inicio Pago">
+      <bpmn:outgoing>Flow_P1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:callActivity id="CallActivity_Fraude" name="Control Antifraude" calledElement="Process_Antifraude">
+      <bpmn:incoming>Flow_P1</bpmn:incoming>
+      <bpmn:outgoing>Flow_P2</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:transaction id="Transaction_Pasarela" name="Transacción Pasarela Bancaria">
+      <bpmn:incoming>Flow_P2</bpmn:incoming>
+      <bpmn:outgoing>Flow_P3</bpmn:outgoing>
+      <bpmn:startEvent id="Start_Tx" name="Iniciar Cargo">
+        <bpmn:outgoing>Flow_Tx1</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:serviceTask id="Task_Autorizar" name="Autorizar Tarjeta">
+        <bpmn:incoming>Flow_Tx1</bpmn:incoming>
+        <bpmn:outgoing>Flow_Tx2</bpmn:outgoing>
+      </bpmn:serviceTask>
+      <bpmn:userTask id="Task_Confirmar3DS" name="Confirmar 3D Secure">
+        <bpmn:incoming>Flow_Tx2</bpmn:incoming>
+        <bpmn:outgoing>Flow_Tx3</bpmn:outgoing>
+      </bpmn:userTask>
+      <bpmn:endEvent id="End_Tx" name="Cargo OK">
+        <bpmn:incoming>Flow_Tx3</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_Tx1" sourceRef="Start_Tx" targetRef="Task_Autorizar" />
+      <bpmn:sequenceFlow id="Flow_Tx2" sourceRef="Task_Autorizar" targetRef="Task_Confirmar3DS" />
+      <bpmn:sequenceFlow id="Flow_Tx3" sourceRef="Task_Confirmar3DS" targetRef="End_Tx" />
+    </bpmn:transaction>
+    <bpmn:sendTask id="Task_EmitirRecibo" name="Emitir Factura">
+      <bpmn:incoming>Flow_P3</bpmn:incoming>
+      <bpmn:outgoing>Flow_P4</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="End_Pago" name="Pago Completado">
+      <bpmn:incoming>Flow_P4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_P1" sourceRef="Start_Pago" targetRef="CallActivity_Fraude" />
+    <bpmn:sequenceFlow id="Flow_P2" sourceRef="CallActivity_Fraude" targetRef="Transaction_Pasarela" />
+    <bpmn:sequenceFlow id="Flow_P3" sourceRef="Transaction_Pasarela" targetRef="Task_EmitirRecibo" />
+    <bpmn:sequenceFlow id="Flow_P4" sourceRef="Task_EmitirRecibo" targetRef="End_Pago" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Payment">
+    <bpmndi:BPMNPlane id="BPMNPlane_Payment" bpmnElement="Process_Pago_Global">
+      <bpmndi:BPMNShape id="Start_Pago_di" bpmnElement="Start_Pago">
+        <dc:Bounds x="160" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="CallActivity_Fraude_di" bpmnElement="CallActivity_Fraude">
+        <dc:Bounds x="260" y="140" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Transaction_Pasarela_di" bpmnElement="Transaction_Pasarela" isExpanded="false">
+        <dc:Bounds x="450" y="140" width="130" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Start_Tx_di" bpmnElement="Start_Tx">
+        <dc:Bounds x="180" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Autorizar_di" bpmnElement="Task_Autorizar">
+        <dc:Bounds x="280" y="140" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Confirmar3DS_di" bpmnElement="Task_Confirmar3DS">
+        <dc:Bounds x="460" y="140" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Tx_di" bpmnElement="End_Tx">
+        <dc:Bounds x="640" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_Tx1_di" bpmnElement="Flow_Tx1">
+        <di:waypoint x="216" y="180" />
+        <di:waypoint x="280" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Tx2_di" bpmnElement="Flow_Tx2">
+        <di:waypoint x="400" y="180" />
+        <di:waypoint x="460" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Tx3_di" bpmnElement="Flow_Tx3">
+        <di:waypoint x="580" y="180" />
+        <di:waypoint x="640" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_EmitirRecibo_di" bpmnElement="Task_EmitirRecibo">
+        <dc:Bounds x="650" y="140" width="120" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Pago_di" bpmnElement="End_Pago">
+        <dc:Bounds x="840" y="162" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_P1_di" bpmnElement="Flow_P1">
+        <di:waypoint x="196" y="180" />
+        <di:waypoint x="260" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_P2_di" bpmnElement="Flow_P2">
+        <di:waypoint x="380" y="180" />
+        <di:waypoint x="450" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_P3_di" bpmnElement="Flow_P3">
+        <di:waypoint x="580" y="180" />
+        <di:waypoint x="650" y="180" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_P4_di" bpmnElement="Flow_P4">
+        <di:waypoint x="770" y="180" />
+        <di:waypoint x="840" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
