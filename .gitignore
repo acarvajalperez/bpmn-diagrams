@@ -4,6 +4,8 @@
 !*/
 !*.bpmn
 !*.form
+!*.svg
+!README.md
 !.gitignore
 
 # Codigo / configuracion ajena a los diagramas
