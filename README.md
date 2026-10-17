@@ -62,12 +62,6 @@ Fuente: [`diagrams/Business Processes/puro.bpmn`](diagrams/Business%20Processes/
 
 ## diagrams/Business Processes/Nexa
 
-### 000\_Subproceso\_Agentico
-
-[![000_Subproceso_Agentico](diagrams/Business%20Processes/Nexa/000_Subproceso_Agentico.svg)](diagrams/Business%20Processes/Nexa/000_Subproceso_Agentico.bpmn)
-
-Fuente: [`diagrams/Business Processes/Nexa/000_Subproceso_Agentico.bpmn`](diagrams/Business%20Processes/Nexa/000_Subproceso_Agentico.bpmn)
-
 ### Error Handle Process
 
 [![Error Handle Process](diagrams/Business%20Processes/Nexa/Error%20Handle%20Process.svg)](diagrams/Business%20Processes/Nexa/Error%20Handle%20Process.bpmn)
@@ -343,6 +337,14 @@ Fuente: [`operations/134_Finish Operation Process.bpmn`](operations/134_Finish%2
 [![140_Finish Request Process](operations/140_Finish%20Request%20Process.svg)](operations/140_Finish%20Request%20Process.bpmn)
 
 Fuente: [`operations/140_Finish Request Process.bpmn`](operations/140_Finish%20Request%20Process.bpmn)
+
+## operations/agentic
+
+### 000\_Subproceso\_Agentico
+
+[![000_Subproceso_Agentico](operations/agentic/000_Subproceso_Agentico.svg)](operations/agentic/000_Subproceso_Agentico.bpmn)
+
+Fuente: [`operations/agentic/000_Subproceso_Agentico.bpmn`](operations/agentic/000_Subproceso_Agentico.bpmn)
 
 ## utils/Communications
 
