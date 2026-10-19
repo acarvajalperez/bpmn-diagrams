@@ -1,36 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
-                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:camunda="http://camunda.org/schema/1.0/bpmn"
-                  id="Definitions_LangGraph_Full_Engine"
-                  targetNamespace="http://bpmn.io/schema/bpmn"
-                  exporter="Camunda Modeler"
-                  exporterVersion="5.0.0">
-
-  <!-- ======================================================== -->
-  <!-- LÓGICA DE PROCESO COMPLETA (REEMPLAZO LANGGRAPH)          -->
-  <!-- ======================================================== -->
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" id="Definitions_LangGraph_Full_Engine" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.51.1">
   <bpmn:process id="LangGraph_Engine_Process" name="LangGraph Complete Replacement Process" isExecutable="true">
-
-    <!-- 1. EVENTO INICIAL: Recibir Payload y Thread ID -->
     <bpmn:startEvent id="Start_Agent_Execution" name="POST /agent/invoke (thread_id, prompt)">
       <bpmn:outgoing>Flow_01</bpmn:outgoing>
     </bpmn:startEvent>
-
-    <!-- 2. CHECKPOINT LOAD: Cargar o Inicializar AgentState -->
     <bpmn:serviceTask id="Task_Load_Checkpointer" name="Checkpointer: Cargar Estado de Thread" camunda:type="external" camunda:topic="load-checkpoint">
       <bpmn:incoming>Flow_01</bpmn:incoming>
       <bpmn:outgoing>Flow_02</bpmn:outgoing>
     </bpmn:serviceTask>
-
-    <!-- 3. REDUCER INICIAL: Inyectar mensaje de usuario en AgentState -->
     <bpmn:scriptTask id="Task_Append_User_Message" name="Reducer: Append HumanMessage" scriptFormat="groovy">
       <bpmn:incoming>Flow_02</bpmn:incoming>
       <bpmn:outgoing>Flow_03</bpmn:outgoing>
-      <bpmn:script><![CDATA[
+      <bpmn:script>
         def stateMap = execution.getVariable("state")
         def messages = stateMap.get("messages")
         def newInput = execution.getVariable("user_prompt")
@@ -43,46 +24,36 @@
         messages.add(humanMsg)
         stateMap.put("messages", messages)
         execution.setVariable("state", stateMap)
-      ]]></bpmn:script>
+      </bpmn:script>
     </bpmn:scriptTask>
-
-    <!-- 4. NODO LLM: Ejecutar Modelo y Generar Tool Calls / Respuesta -->
     <bpmn:serviceTask id="Task_Call_LLM_Node" name="LLM Node: Invocación LLM (call_model)" camunda:type="external" camunda:topic="call-llm">
       <bpmn:incoming>Flow_03</bpmn:incoming>
       <bpmn:incoming>Flow_Loop_Back</bpmn:incoming>
       <bpmn:outgoing>Flow_04</bpmn:outgoing>
     </bpmn:serviceTask>
-
-    <!-- 5. CHECKPOINT SAVE: Persistir estado post-razonamiento -->
     <bpmn:serviceTask id="Task_Save_LLM_Checkpoint" name="Checkpointer: Save LLM State" camunda:type="external" camunda:topic="save-checkpoint">
       <bpmn:incoming>Flow_04</bpmn:incoming>
       <bpmn:outgoing>Flow_05</bpmn:outgoing>
     </bpmn:serviceTask>
-
-    <!-- 6. ROUTER (CONDITIONAL EDGE): Evaluar siguiente paso -->
     <bpmn:exclusiveGateway id="Gateway_Router" name="¿Router: evaluate_action?">
       <bpmn:incoming>Flow_05</bpmn:incoming>
       <bpmn:outgoing>Flow_Route_HITL</bpmn:outgoing>
       <bpmn:outgoing>Flow_Route_Tools</bpmn:outgoing>
       <bpmn:outgoing>Flow_Route_End</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-
-    <!-- 7A. INTERRUPT / HUMAN-IN-THE-LOOP (HITL) -->
     <bpmn:userTask id="Task_Human_Interrupt" name="HITL: Human-in-the-Loop Interrupt" camunda:candidateGroups="agent_operators">
       <bpmn:incoming>Flow_Route_HITL</bpmn:incoming>
       <bpmn:outgoing>Flow_06</bpmn:outgoing>
     </bpmn:userTask>
-
     <bpmn:exclusiveGateway id="Gateway_HITL_Decision" name="¿Aprobado por Operador?">
       <bpmn:incoming>Flow_06</bpmn:incoming>
       <bpmn:outgoing>Flow_HITL_Approved</bpmn:outgoing>
       <bpmn:outgoing>Flow_HITL_Rejected</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-
     <bpmn:scriptTask id="Task_Inject_HITL_Feedback" name="Reducer: Inject Human Feedback" scriptFormat="groovy">
       <bpmn:incoming>Flow_HITL_Rejected</bpmn:incoming>
       <bpmn:outgoing>Flow_07</bpmn:outgoing>
-      <bpmn:script><![CDATA[
+      <bpmn:script>
         def stateMap = execution.getVariable("state")
         def messages = stateMap.get("messages")
         def feedback = execution.getVariable("human_feedback")
@@ -93,64 +64,55 @@
         ])
         stateMap.put("messages", messages)
         execution.setVariable("state", stateMap)
-      ]]></bpmn:script>
+      </bpmn:script>
     </bpmn:scriptTask>
-
-    <!-- 7B. SUBPROCESO PARALELO TOOLNODE (MULTI-INSTANCE) -->
     <bpmn:subProcess id="SubProcess_ToolNode" name="ToolNode: Ejecución Paralela de Herramientas">
-      <bpmn:incoming>Flow_Route_Tools</bpmn:incoming>
-      <bpmn:incoming>Flow_HITL_Approved</bpmn:incoming>
+      <bpmn:incoming>Flow_02ml3ay</bpmn:incoming>
       <bpmn:outgoing>Flow_08</bpmn:outgoing>
-
-      <!-- Iteración en paralelo por cada tool_call solicitado por el LLM -->
-      <bpmn:multiInstanceLoopCharacteristics isSequential="false" camunda:collection="${state.last_message.tool_calls}" camunda:elementVariable="current_tool_call" />
-
+      <bpmn:multiInstanceLoopCharacteristics camunda:collection="${state.last_message.tool_calls}" camunda:elementVariable="current_tool_call" />
       <bpmn:startEvent id="Start_Tool_Exec">
         <bpmn:outgoing>SubFlow_01</bpmn:outgoing>
       </bpmn:startEvent>
-
       <bpmn:serviceTask id="Task_Execute_Tool_API" name="Ejecutar Tool API / Function" camunda:type="external" camunda:topic="execute-tool">
         <bpmn:incoming>SubFlow_01</bpmn:incoming>
         <bpmn:outgoing>SubFlow_02</bpmn:outgoing>
       </bpmn:serviceTask>
-
-      <!-- Captura de Excepciones en Herramientas (Fallback) -->
       <bpmn:boundaryEvent id="Boundary_Tool_Error" attachedToRef="Task_Execute_Tool_API">
         <bpmn:errorEventDefinition id="ErrorDef_1" errorRef="Tool_Execution_Error" />
       </bpmn:boundaryEvent>
-
       <bpmn:scriptTask id="Task_Handle_Tool_Error" name="Formatear Error ToolMessage" scriptFormat="groovy">
         <bpmn:incoming>Flow_Catch_Error</bpmn:incoming>
         <bpmn:outgoing>SubFlow_03</bpmn:outgoing>
-        <bpmn:script><![CDATA[
+        <bpmn:script>
           execution.setVariable("tool_result", [
             status: "error",
             content: "Excepción en herramienta: " + execution.getVariable("errorCode")
           ])
-        ]]></bpmn:script>
+        </bpmn:script>
       </bpmn:scriptTask>
-
       <bpmn:endEvent id="End_Tool_Exec">
+        <bpmn:incoming>Flow_16jbp9x</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="SubFlow_01" sourceRef="Start_Tool_Exec" targetRef="Task_Execute_Tool_API" />
+      <bpmn:sequenceFlow id="SubFlow_02" sourceRef="Task_Execute_Tool_API" targetRef="Gateway_1p6e1z7" />
+      <bpmn:sequenceFlow id="Flow_Catch_Error" sourceRef="Boundary_Tool_Error" targetRef="Task_Handle_Tool_Error" />
+      <bpmn:sequenceFlow id="SubFlow_03" sourceRef="Task_Handle_Tool_Error" targetRef="Gateway_1p6e1z7" />
+      <bpmn:exclusiveGateway id="Gateway_1p6e1z7">
         <bpmn:incoming>SubFlow_02</bpmn:incoming>
         <bpmn:incoming>SubFlow_03</bpmn:incoming>
-      </bpmn:endEvent>
-
-      <bpmn:sequenceFlow id="SubFlow_01" sourceRef="Start_Tool_Exec" targetRef="Task_Execute_Tool_API" />
-      <bpmn:sequenceFlow id="SubFlow_02" sourceRef="Task_Execute_Tool_API" targetRef="End_Tool_Exec" />
-      <bpmn:sequenceFlow id="Flow_Catch_Error" sourceRef="Boundary_Tool_Error" targetRef="Task_Handle_Tool_Error" />
-      <bpmn:sequenceFlow id="SubFlow_03" sourceRef="Task_Handle_Tool_Error" targetRef="End_Tool_Exec" />
+        <bpmn:outgoing>Flow_16jbp9x</bpmn:outgoing>
+      </bpmn:exclusiveGateway>
+      <bpmn:sequenceFlow id="Flow_16jbp9x" sourceRef="Gateway_1p6e1z7" targetRef="End_Tool_Exec" />
     </bpmn:subProcess>
-
-    <!-- 8. REDUCER POST-TOOLS: Acumular ToolMessages en AgentState -->
     <bpmn:scriptTask id="Task_Consolidate_Tool_Results" name="Reducer: Append ToolMessages (add_messages)" scriptFormat="groovy">
-      <bpmn:incoming>Flow_08</bpmn:incoming>
+      <bpmn:incoming>Flow_0p2646v</bpmn:incoming>
       <bpmn:outgoing>Flow_09</bpmn:outgoing>
-      <bpmn:script><![CDATA[
+      <bpmn:script>
         def stateMap = execution.getVariable("state")
         def messages = stateMap.get("messages")
         def toolResults = execution.getVariable("tool_results_list") // Colección de los subprocesos
         
-        toolResults.each { result ->
+        toolResults.each { result -&gt;
           messages.add([
             role: "tool",
             tool_call_id: result.tool_call_id,
@@ -159,248 +121,240 @@
         }
         stateMap.put("messages", messages)
         execution.setVariable("state", stateMap)
-      ]]></bpmn:script>
+      </bpmn:script>
     </bpmn:scriptTask>
-
-    <!-- 9. CHECKPOINT SAVE: Persistir estado de herramientas -->
     <bpmn:serviceTask id="Task_Save_Tool_Checkpoint" name="Checkpointer: Save Tools State" camunda:type="external" camunda:topic="save-checkpoint">
       <bpmn:incoming>Flow_09</bpmn:incoming>
-      <bpmn:incoming>Flow_07</bpmn:incoming>
       <bpmn:outgoing>Flow_Loop_Back</bpmn:outgoing>
     </bpmn:serviceTask>
-
-    <!-- 10. FIN DEL PROCESO: Retornar Respuesta al Cliente -->
     <bpmn:endEvent id="End_Agent_Execution" name="Retornar AI Response (END)">
       <bpmn:incoming>Flow_Route_End</bpmn:incoming>
     </bpmn:endEvent>
-
-    <!-- CONEXIONES Y SECUENCIAS -->
     <bpmn:sequenceFlow id="Flow_01" sourceRef="Start_Agent_Execution" targetRef="Task_Load_Checkpointer" />
     <bpmn:sequenceFlow id="Flow_02" sourceRef="Task_Load_Checkpointer" targetRef="Task_Append_User_Message" />
     <bpmn:sequenceFlow id="Flow_03" sourceRef="Task_Append_User_Message" targetRef="Task_Call_LLM_Node" />
     <bpmn:sequenceFlow id="Flow_04" sourceRef="Task_Call_LLM_Node" targetRef="Task_Save_LLM_Checkpoint" />
     <bpmn:sequenceFlow id="Flow_05" sourceRef="Task_Save_LLM_Checkpoint" targetRef="Gateway_Router" />
-
-    <!-- Rutas del Gateway Router -->
     <bpmn:sequenceFlow id="Flow_Route_HITL" name="Requiere Interrupción (Human)" sourceRef="Gateway_Router" targetRef="Task_Human_Interrupt">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${state.requires_interrupt == true}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${state.requires_interrupt == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-
-    <bpmn:sequenceFlow id="Flow_Route_Tools" name="Tool Calls &gt; 0" sourceRef="Gateway_Router" targetRef="SubProcess_ToolNode">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${state.last_message.tool_calls.size() > 0 && state.requires_interrupt == false}]]></bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_Route_Tools" name="Tool Calls &#62; 0" sourceRef="Gateway_Router" targetRef="Gateway_1wkougu">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${state.last_message.tool_calls.size() &gt; 0 &amp;&amp; state.requires_interrupt == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-
     <bpmn:sequenceFlow id="Flow_Route_End" name="Sin Tool Calls (Respuesta Final)" sourceRef="Gateway_Router" targetRef="End_Agent_Execution">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${state.last_message.tool_calls.size() == 0}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${state.last_message.tool_calls.size() == 0}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-
-    <!-- Rutas HITL -->
     <bpmn:sequenceFlow id="Flow_06" sourceRef="Task_Human_Interrupt" targetRef="Gateway_HITL_Decision" />
-    <bpmn:sequenceFlow id="Flow_HITL_Approved" name="Aprobado" sourceRef="Gateway_HITL_Decision" targetRef="SubProcess_ToolNode">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${human_approved == true}]]></bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_HITL_Approved" name="Aprobado" sourceRef="Gateway_HITL_Decision" targetRef="Gateway_1wkougu">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${human_approved == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_HITL_Rejected" name="Rechazado" sourceRef="Gateway_HITL_Decision" targetRef="Task_Inject_HITL_Feedback">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression"><![CDATA[${human_approved == false}]]></bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${human_approved == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_07" sourceRef="Task_Inject_HITL_Feedback" targetRef="Task_Save_Tool_Checkpoint" />
-
-    <!-- Bucle de Re-evaluación del Grafo -->
-    <bpmn:sequenceFlow id="Flow_08" sourceRef="SubProcess_ToolNode" targetRef="Task_Consolidate_Tool_Results" />
+    <bpmn:sequenceFlow id="Flow_07" sourceRef="Task_Inject_HITL_Feedback" targetRef="Gateway_0oxei08" />
+    <bpmn:sequenceFlow id="Flow_08" sourceRef="SubProcess_ToolNode" targetRef="Gateway_0oxei08" />
     <bpmn:sequenceFlow id="Flow_09" sourceRef="Task_Consolidate_Tool_Results" targetRef="Task_Save_Tool_Checkpoint" />
     <bpmn:sequenceFlow id="Flow_Loop_Back" sourceRef="Task_Save_Tool_Checkpoint" targetRef="Task_Call_LLM_Node" />
-
+    <bpmn:exclusiveGateway id="Gateway_1wkougu">
+      <bpmn:incoming>Flow_HITL_Approved</bpmn:incoming>
+      <bpmn:incoming>Flow_Route_Tools</bpmn:incoming>
+      <bpmn:outgoing>Flow_02ml3ay</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_02ml3ay" sourceRef="Gateway_1wkougu" targetRef="SubProcess_ToolNode" />
+    <bpmn:exclusiveGateway id="Gateway_0oxei08">
+      <bpmn:incoming>Flow_08</bpmn:incoming>
+      <bpmn:incoming>Flow_07</bpmn:incoming>
+      <bpmn:outgoing>Flow_0p2646v</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0p2646v" sourceRef="Gateway_0oxei08" targetRef="Task_Consolidate_Tool_Results" />
   </bpmn:process>
-
-  <!-- Definición de Errores de Proceso -->
   <bpmn:error id="Tool_Execution_Error" name="Tool Execution Error" errorCode="500" />
-
-  <!-- ======================================================== -->
-  <!-- INFORMACIÓN DE VISUALIZACIÓN COMPLETA (BPMNDI)            -->
-  <!-- ======================================================== -->
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="LangGraph_Engine_Process">
-
-      <bpmndi:BPMNShape id="Start_Agent_Execution_di" bpmnElement="Start_Agent_Execution">
-        <dc:Bounds x="152" y="192" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="126" y="235" width="88" height="27" />
+      <bpmndi:BPMNShape id="Start_Agent_Execution_di" bpmnElement="Start_Agent_Execution" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="152" y="342" width="36" height="36" />
+        <bpmndi:BPMNLabel color:color="#205022">
+          <dc:Bounds x="137" y="385" width="66" height="53" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Load_Checkpointer_di" bpmnElement="Task_Load_Checkpointer">
-        <dc:Bounds x="240" y="170" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Load_Checkpointer_di" bpmnElement="Task_Load_Checkpointer" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="240" y="320" width="110" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Append_User_Message_di" bpmnElement="Task_Append_User_Message">
-        <dc:Bounds x="390" y="170" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Append_User_Message_di" bpmnElement="Task_Append_User_Message" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="390" y="320" width="110" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Call_LLM_Node_di" bpmnElement="Task_Call_LLM_Node">
-        <dc:Bounds x="540" y="170" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Call_LLM_Node_di" bpmnElement="Task_Call_LLM_Node" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="540" y="320" width="110" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Save_LLM_Checkpoint_di" bpmnElement="Task_Save_LLM_Checkpoint">
-        <dc:Bounds x="690" y="170" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Save_LLM_Checkpoint_di" bpmnElement="Task_Save_LLM_Checkpoint" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="690" y="320" width="110" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Gateway_Router_di" bpmnElement="Gateway_Router" isMarkerVisible="true">
-        <dc:Bounds x="845" y="185" width="50" height="50" />
+      <bpmndi:BPMNShape id="Gateway_Router_di" bpmnElement="Gateway_Router" isMarkerVisible="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="835" y="335" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="830" y="148" width="80" height="27" />
+          <dc:Bounds x="878" y="275.5" width="84" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Human_Interrupt_di" bpmnElement="Task_Human_Interrupt">
-        <dc:Bounds x="950" y="70" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Consolidate_Tool_Results_di" bpmnElement="Task_Consolidate_Tool_Results" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="840" y="620" width="120" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Gateway_HITL_Decision_di" bpmnElement="Gateway_HITL_Decision" isMarkerVisible="true">
-        <dc:Bounds x="1105" y="85" width="50" height="50" />
+      <bpmndi:BPMNShape id="Task_Save_Tool_Checkpoint_di" bpmnElement="Task_Save_Tool_Checkpoint" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="650" y="620" width="120" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Inject_HITL_Feedback_di" bpmnElement="Task_Inject_HITL_Feedback">
-        <dc:Bounds x="1200" y="70" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Human_Interrupt_di" bpmnElement="Task_Human_Interrupt" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="805" y="480" width="110" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-
+      <bpmndi:BPMNShape id="Gateway_HITL_Decision_di" bpmnElement="Gateway_HITL_Decision" isMarkerVisible="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="965" y="495" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="953" y="555" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1wkougu_di" bpmnElement="Gateway_1wkougu" isMarkerVisible="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="965" y="335" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Inject_HITL_Feedback_di" bpmnElement="Task_Inject_HITL_Feedback" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1065" y="480" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Agent_Execution_di" bpmnElement="End_Agent_Execution" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1612" y="102" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1588" y="148" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0oxei08_di" bpmnElement="Gateway_0oxei08" isMarkerVisible="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1095" y="635" width="50" height="50" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SubProcess_ToolNode_di" bpmnElement="SubProcess_ToolNode" isExpanded="true">
-        <dc:Bounds x="950" y="270" width="360" height="180" />
+        <dc:Bounds x="1070" y="200" width="510" height="250" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Start_Tool_Exec_di" bpmnElement="Start_Tool_Exec">
-        <dc:Bounds x="972" y="332" width="36" height="36" />
+      <bpmndi:BPMNShape id="Start_Tool_Exec_di" bpmnElement="Start_Tool_Exec" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1092" y="262" width="36" height="36" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Execute_Tool_API_di" bpmnElement="Task_Execute_Tool_API">
-        <dc:Bounds x="1040" y="310" width="110" height="80" />
+      <bpmndi:BPMNShape id="Task_Execute_Tool_API_di" bpmnElement="Task_Execute_Tool_API" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1160" y="240" width="110" height="80" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Handle_Tool_Error_di" bpmnElement="Task_Handle_Tool_Error">
-        <dc:Bounds x="1150" y="360" width="100" height="60" />
+      <bpmndi:BPMNShape id="End_Tool_Exec_di" bpmnElement="End_Tool_Exec" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1512" y="262" width="36" height="36" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="End_Tool_Exec_di" bpmnElement="End_Tool_Exec">
-        <dc:Bounds x="1262" y="332" width="36" height="36" />
+      <bpmndi:BPMNShape id="Task_Handle_Tool_Error_di" bpmnElement="Task_Handle_Tool_Error" bioc:stroke="#5b176d" bioc:fill="#e1bee7" color:background-color="#e1bee7" color:border-color="#5b176d">
+        <dc:Bounds x="1300" y="350" width="100" height="60" />
       </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Boundary_Tool_Error_di" bpmnElement="Boundary_Tool_Error">
-        <dc:Bounds x="1112" y="372" width="36" height="36" />
+      <bpmndi:BPMNShape id="Gateway_1p6e1z7_di" bpmnElement="Gateway_1p6e1z7" isMarkerVisible="true" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1405" y="255" width="50" height="50" />
       </bpmndi:BPMNShape>
-
+      <bpmndi:BPMNShape id="Boundary_Tool_Error_di" bpmnElement="Boundary_Tool_Error" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1232" y="302" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SubFlow_01_di" bpmnElement="SubFlow_01">
-        <di:waypoint x="1008" y="350" />
-        <di:waypoint x="1040" y="350" />
+        <di:waypoint x="1128" y="280" />
+        <di:waypoint x="1160" y="280" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="SubFlow_02_di" bpmnElement="SubFlow_02">
-        <di:waypoint x="1150" y="350" />
-        <di:waypoint x="1262" y="350" />
+        <di:waypoint x="1270" y="280" />
+        <di:waypoint x="1405" y="280" />
       </bpmndi:BPMNEdge>
-
+      <bpmndi:BPMNEdge id="Flow_16jbp9x_di" bpmnElement="Flow_16jbp9x">
+        <di:waypoint x="1455" y="280" />
+        <di:waypoint x="1512" y="280" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_Catch_Error_di" bpmnElement="Flow_Catch_Error">
-        <di:waypoint x="1130" y="408" />
-        <di:waypoint x="1130" y="420" />
-        <di:waypoint x="1150" y="420" />
+        <di:waypoint x="1250" y="338" />
+        <di:waypoint x="1250" y="380" />
+        <di:waypoint x="1300" y="380" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="SubFlow_03_di" bpmnElement="SubFlow_03">
-        <di:waypoint x="1250" y="390" />
-        <di:waypoint x="1280" y="390" />
-        <di:waypoint x="1280" y="368" />
+        <di:waypoint x="1400" y="380" />
+        <di:waypoint x="1430" y="380" />
+        <di:waypoint x="1430" y="305" />
       </bpmndi:BPMNEdge>
-
-      <bpmndi:BPMNShape id="Task_Consolidate_Tool_Results_di" bpmnElement="Task_Consolidate_Tool_Results">
-        <dc:Bounds x="810" y="490" width="120" height="80" />
-      </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="Task_Save_Tool_Checkpoint_di" bpmnElement="Task_Save_Tool_Checkpoint">
-        <dc:Bounds x="650" y="490" width="120" height="80" />
-      </bpmndi:BPMNShape>
-
-      <bpmndi:BPMNShape id="End_Agent_Execution_di" bpmnElement="End_Agent_Execution">
-        <dc:Bounds x="1352" y="192" width="36" height="36" />
-      </bpmndi:BPMNShape>
-
       <bpmndi:BPMNEdge id="Flow_01_di" bpmnElement="Flow_01">
-        <di:waypoint x="188" y="210" />
-        <di:waypoint x="240" y="210" />
+        <di:waypoint x="188" y="360" />
+        <di:waypoint x="240" y="360" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_02_di" bpmnElement="Flow_02">
-        <di:waypoint x="350" y="210" />
-        <di:waypoint x="390" y="210" />
+        <di:waypoint x="350" y="360" />
+        <di:waypoint x="390" y="360" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_03_di" bpmnElement="Flow_03">
-        <di:waypoint x="500" y="210" />
-        <di:waypoint x="540" y="210" />
+        <di:waypoint x="500" y="360" />
+        <di:waypoint x="540" y="360" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_04_di" bpmnElement="Flow_04">
-        <di:waypoint x="650" y="210" />
-        <di:waypoint x="690" y="210" />
+        <di:waypoint x="650" y="360" />
+        <di:waypoint x="690" y="360" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_05_di" bpmnElement="Flow_05">
-        <di:waypoint x="800" y="210" />
-        <di:waypoint x="845" y="210" />
+        <di:waypoint x="800" y="360" />
+        <di:waypoint x="835" y="360" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_Route_HITL_di" bpmnElement="Flow_Route_HITL">
-        <di:waypoint x="870" y="185" />
-        <di:waypoint x="870" y="110" />
-        <di:waypoint x="950" y="110" />
+        <di:waypoint x="860" y="385" />
+        <di:waypoint x="860" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="870" y="400" width="59" height="40" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_Route_Tools_di" bpmnElement="Flow_Route_Tools">
-        <di:waypoint x="870" y="235" />
-        <di:waypoint x="870" y="360" />
-        <di:waypoint x="950" y="360" />
+        <di:waypoint x="885" y="360" />
+        <di:waypoint x="965" y="360" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="889" y="337" width="67" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_Route_End_di" bpmnElement="Flow_Route_End">
-        <di:waypoint x="895" y="210" />
-        <di:waypoint x="1352" y="210" />
+        <di:waypoint x="860" y="335" />
+        <di:waypoint x="860" y="120" />
+        <di:waypoint x="1612" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1216" y="76" width="87" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_06_di" bpmnElement="Flow_06">
-        <di:waypoint x="1060" y="110" />
-        <di:waypoint x="1105" y="110" />
+        <di:waypoint x="915" y="520" />
+        <di:waypoint x="965" y="520" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_HITL_Approved_di" bpmnElement="Flow_HITL_Approved">
-        <di:waypoint x="1130" y="135" />
-        <di:waypoint x="1130" y="270" />
+        <di:waypoint x="990" y="495" />
+        <di:waypoint x="990" y="385" />
+        <bpmndi:BPMNLabel color:color="#0d4372">
+          <dc:Bounds x="996" y="433" width="48" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_HITL_Rejected_di" bpmnElement="Flow_HITL_Rejected">
-        <di:waypoint x="1155" y="110" />
-        <di:waypoint x="1200" y="110" />
+        <di:waypoint x="1015" y="520" />
+        <di:waypoint x="1065" y="520" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1002" y="493" width="56" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_07_di" bpmnElement="Flow_07">
-        <di:waypoint x="1250" y="150" />
-        <di:waypoint x="1250" y="530" />
-        <di:waypoint x="770" y="530" />
+        <di:waypoint x="1120" y="560" />
+        <di:waypoint x="1120" y="635" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_08_di" bpmnElement="Flow_08">
-        <di:waypoint x="950" y="410" />
-        <di:waypoint x="870" y="410" />
-        <di:waypoint x="870" y="490" />
+        <di:waypoint x="1325" y="450" />
+        <di:waypoint x="1325" y="660" />
+        <di:waypoint x="1145" y="660" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_09_di" bpmnElement="Flow_09">
-        <di:waypoint x="810" y="530" />
-        <di:waypoint x="770" y="530" />
+        <di:waypoint x="840" y="660" />
+        <di:waypoint x="770" y="660" />
       </bpmndi:BPMNEdge>
-
       <bpmndi:BPMNEdge id="Flow_Loop_Back_di" bpmnElement="Flow_Loop_Back">
-        <di:waypoint x="650" y="530" />
-        <di:waypoint x="595" y="530" />
-        <di:waypoint x="595" y="250" />
+        <di:waypoint x="650" y="660" />
+        <di:waypoint x="595" y="660" />
+        <di:waypoint x="595" y="400" />
       </bpmndi:BPMNEdge>
-
+      <bpmndi:BPMNEdge id="Flow_02ml3ay_di" bpmnElement="Flow_02ml3ay">
+        <di:waypoint x="1015" y="360" />
+        <di:waypoint x="1070" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0p2646v_di" bpmnElement="Flow_0p2646v">
+        <di:waypoint x="1095" y="660" />
+        <di:waypoint x="960" y="660" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
-
 </bpmn:definitions>
